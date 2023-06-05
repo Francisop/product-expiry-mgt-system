@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!--<style>-->
+<!--    .card:hover {-->
+<!--        background-color: azure;-->
+<!--        cursor: pointer;-->
+<!--        /* color: blue; */-->
+<!--    }-->
+
+<!--    /* a{-->
+<!--        -->
+<!--    } */-->
+<!--</style>-->
+
+
+<!--<div class="container p-5">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-4">-->
+<!--            <a class="card" href="inventory/">-->
+<!--                &lt;!&ndash; <img class="card-img-top" src="holder.js/100x180/" alt=""> &ndash;&gt;-->
+<!--                <div class="card-body">-->
+<!--                    <h4 class="card-title">View Inventory</h4>-->
+<!--                    <p class="card-text">Add a new product to the inventory</p>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4">-->
+<!--            <div class="card">-->
+<!--                &lt;!&ndash; <img class="card-img-top" src="holder.js/100x180/" alt=""> &ndash;&gt;-->
+<!--                <div class="card-body">-->
+<!--                    <h4 class="card-title">Add Product</h4>-->
+<!--                    <p class="card-text">Add a new product to the inventory</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--        <div class="col-lg-4">-->
+<!--            <div class="card">-->
+<!--                &lt;!&ndash; <img class="card-img-top" src="holder.js/100x180/" alt=""> &ndash;&gt;-->
+<!--                <div class="card-body">-->
+<!--                    <h4 class="card-title">Add Product</h4>-->
+<!--                    <p class="card-text">Add a new product to the inventory</p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="header fixed-top d-flex align-items-center">
+
+<h1 class="text-center p-5">Product Expiry Alert Management System</h1>
+
+
+  </header><!-- End Header -->
+
+
+  <!-- ======= Sidebar ======= -->
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'index' %}">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+
+
+          <li class="nav-item">
+        <a class="nav-link " href="{% url 'inventory' %}">
+          <i class="bi bi-bag"></i>
+          <span>Products</span>
+        </a>
+      </li>
+
+
+      <li class="nav-item">
+        <a class="nav-link " href="{% url 'add-product' %}">
+          <i class="bi bi-bag-plus"></i>
+          <span>Add Products</span>
+        </a>
+      </li>
+
+          <li class="nav-item">
+        <a class="nav-link " href="{% url 'report' %}">
+          <i class="bi bi-bar-chart"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+
+
+
+
+    </ul>
+
+  </aside><!-- End Sidebar-->
+
+  <main id="main" class="main">
+
+    <div class="pagetitle p-3">
+      <h1>Add Product</h1>
+
+    </div><!-- End Page Title -->
+
+    <section class="section contact">
+                <div class="card p-4">
+
+          <form method="post" >
+<!--            action="{% url 'add-product' %}"-->
+            {% csrf_token %}
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <input type="text" name="name" class="form-control" placeholder="Product Name" required>
+                </div>
+
+                <div class="col-md-6 ">
+                  <input type="number" class="form-control" name="price" placeholder="Price" required>
+                </div>
+
+                <div class="col-md-12">
+                  <input type="number" class="form-control" name="qty" placeholder="Quantity" required>
+                </div>
+
+                <div class="col-md-12">
+                  <input type="date" class="form-control" name="exp" placeholder="Expiry date" required>
+                </div>
+
+                <div class="col-md-12">
+                  <textarea class="form-control" name="desc" rows="6" placeholder="Description"></textarea>
+                </div>
+
+                <div class="col-md-12 text-center">
+<!--                  <div class="loading">Loading</div>-->
+<!--                  <div class="error-message"></div>-->
+<!--                  <div class="sent-message">Your message has been sent. Thank you!</div>-->
+                  <button type="submit">Add Product</button>
+                </div>
+
+              </div>
+            </form>
+              </div>
+
+    </section>
+
+
+
+  </main><!-- End #main -->
+
+
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+{% endblock %}
