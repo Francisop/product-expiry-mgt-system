@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load tz %}
+
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -69,19 +69,10 @@
 
 <main id="main" class="main">
 
-    {% if expired %}
-
-    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
-        {{expired}} Product has expired
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endif %}
-
-
     <div class="pagetitle">
-        <h1>Dashboard</h1>
-    </div><!-- End Page Title -->
+        <h1>Products</h1>
 
+    </div><!-- End Page Title -->
 
     <section class="section dashboard">
         <div class="row">
@@ -89,48 +80,6 @@
             <!-- Left side columns -->
             <div class="col-lg-12">
                 <div class="row">
-
-                    <!-- Sales Card -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card sales-card">
-                            <div class="card-body">
-                                <h5 class="card-title">Products <span>| Total</span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{product_count}}</h6>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Sales Card -->
-
-                    <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
-                        <div class="card info-card revenue-card">
-
-
-                            <div class="card-body">
-                                <h5 class="card-title">Expired <span>| Today</span></h5>
-
-                                <div class="d-flex align-items-center">
-                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-trash"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>{{expired}}</h6>
-                                        <!--                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>-->
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div><!-- End Revenue Card -->
 
 
                     <!-- Recent Sales -->
@@ -144,34 +93,23 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <!--                        <th scope="col">Customer</th>-->
+                                        <th scope="col">Category</th>
                                         <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
                                         <th scope="col">Qty</th>
-                                        <th scope="col">Expiring</th>
+                                        <th scope="col">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    {% for item in top_5 %}
+                                    {% for item in products %}
 
                                     <tr>
                                         <th scope="row">#{{item.pk}}</th>
 
-                                        <td><a href="{%  url 'product_detail' product_id=item.pk %}"
-                                               class="text-primary">{{item.name}}</a></td>
+                                        <td><a href="#" class="text-primary">{{item.name}}</a></td>
                                         <td>${{item.price}}</td>
                                         <td>{{item.quantity}}</td>
-                                        <td>
-                                            {% if item.expiry_date|date:'F j, Y' > today_now|date:'F j, Y' %}
-                                            <span class="badge bg-success">{{item.expiry_date}}</span>
-
-                                            {% else %}
-                                            <span class="badge bg-danger">{{item.expiry_date}}</span>
-
-                                            {% endif %}
-
-
-                                        </td>
+                                        <td><span class="badge bg-success">{{item.expiry_date}}</span></td>
                                     </tr>
                                     {% endfor %}
 

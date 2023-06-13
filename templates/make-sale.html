@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+    <h1 class="text-center p-5">Product Expiry Alert Management System</h1>
+
+
+</header><!-- End Header -->
+
+
+<!-- ======= Sidebar ======= -->
+<aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'index' %}">
+                <i class="bi bi-grid"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'sale' %}">
+                <i class="bi bi-bag"></i>
+                <span>Sales</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'make-sale' %}">
+                <i class="bi bi-bag"></i>
+                <span>Make Sale</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'inventory' %}">
+                <i class="bi bi-bag"></i>
+                <span>Products</span>
+            </a>
+        </li>
+
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'add-product' %}">
+                <i class="bi bi-bag-plus"></i>
+                <span>Add Products</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'report' %}">
+                <i class="bi bi-bar-chart"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+
+    </ul>
+
+</aside><!-- End Sidebar-->
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Make Sale</h1>
+        <hr>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6">
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Customer detail Form</h5>
+
+                        <!-- Multi Columns Form -->
+                        <form class="row g-3 p-2">
+                            <div class="col-md-12">
+                                <label for="inputName5" class="form-label">Customer Name</label>
+                                <input type="text" class="form-control" id="inputName5">
+                            </div>
+                            <div class="col-md-12">
+                                <label for="inputEmail5" class="form-label">Phone</label>
+                                <input type="email" class="form-control" id="inputEmail5">
+                            </div>
+                            <!--                            <div class="col-md-6">-->
+                            <!--                                <label for="inputPassword5" class="form-label">Password</label>-->
+                            <!--                                <input type="password" class="form-control" id="inputPassword5">-->
+                            <!--                            </div>-->
+
+                        </form><!-- End Multi Columns Form -->
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Product Form</h5>
+
+                        <!-- No Labels Form -->
+                        <div class="row g-3">
+                            <div class="col-md-2">
+                                <button onclick="addToSelectedOptions()" class="btn btn-primary">Add
+                                </button>
+                            </div>
+
+                            <div class="col-md-8">
+                                <select id="mySelect" class="form-select">
+                                    {% for item in products %}
+                                    <option value="{{item.name}}">{{item.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="qty" placeholder="Qty">
+                            </div>
+                            <br>
+                            <div class="col-12">
+                                <ul id="selectedOptionsList"></ul>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div><!-- End No Labels Form -->
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+<script>
+    // Initialize an empty array
+var selectedOptions = [];
+
+function addToSelectedOptions() {
+  // Get the select element
+  const qtyValue = document.getElementById("qty").value;
+  var selectElement = document.getElementById("mySelect");
+
+  // Get the selected value
+  var selectedValue = selectElement.value + " x " + qtyValue;
+
+  // Add the selected value to the array
+  selectedOptions.push(selectedValue);
+
+  // Display the array elements in a list format
+  var selectedOptionsList = document.getElementById("selectedOptionsList");
+  selectedOptionsList.innerHTML = ""; // Clear the existing list
+
+  for (var i = 0; i < selectedOptions.length; i++) {
+    var listItem = document.createElement("li");
+    listItem.textContent = selectedOptions[i];
+    selectedOptionsList.appendChild(listItem);
+  }
+}
+
+
+
+
+</script>
+
+
+{% endblock %}
