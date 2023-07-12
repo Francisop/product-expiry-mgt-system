@@ -2,7 +2,7 @@
 
 {% block content %}
 {% load tz %}
-
+{% now "Y-m-d" as current_date %}
 
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
@@ -56,12 +56,6 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link " href="{% url 'report' %}">
-                <i class="bi bi-bar-chart"></i>
-                <span>Reports</span>
-            </a>
-        </li>
 
 
     </ul>
@@ -109,12 +103,12 @@
 
                                         <td><a href="{%  url 'product_detail' product_id=item.pk %}"
                                                class="text-primary">{{item.name}}</a></td>
-                                        <td>${{item.price}}</td>
+                                        <td>₦{{item.price}}</td>
                                         <td>{{item.quantity}}</td>
                                         <td>
 
+                                             {% if item.expiry_date|date:"Y-m-d" > today_now|date:"Y-m-d" %}
 
-                                            {% if item.expiry_date|date:'F j, Y' > today_now|date:'F j, Y' %}
                                             <span class="badge bg-success">{{item.expiry_date}}</span>
 
                                             {% else %}

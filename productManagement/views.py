@@ -46,12 +46,20 @@ class Inventory(View):
 
 
 def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    context = {
-        'product': product,
-        # Other context variables
-    }
-    return render(request, 'product_detail.html', context)
+    if request.POST:
+        print(product_id)
+        product = get_object_or_404(Product, pk=product_id)
+        product.delete()
+        return redirect("inventory")
+    else:
+        product = get_object_or_404(Product, id=product_id)
+        context = {
+            'product': product,
+            # Other context variables
+        }
+        return render(request, 'product_detail.html', context)
+
+
 
 
 class AddProduct(View):
@@ -62,7 +70,7 @@ class AddProduct(View):
         """.vscode"""
         category = Category.objects.all()
         context = {"categories": list(category)}
-        return render(request, self.template_name,context)
+        return render(request, self.template_name, context)
 
     def post(self, request):
         name = request.POST.get('name')
@@ -72,7 +80,8 @@ class AddProduct(View):
         expiry_date = request.POST.get('exp')
         category_id = int(request.POST.get('category'))
         category = Category.objects.get(pk=category_id)
-        product = Product(category=category, name=name, price=price, quantity=quantity, description=description, expiry_date=expiry_date)
+        product = Product(category=category, name=name, price=price, quantity=quantity, description=description,
+                          expiry_date=expiry_date)
         product.save()
         return redirect('inventory')  # 'inventory'
 
@@ -97,20 +106,47 @@ class MakeSaleView(View):
         """.vscode"""
         products = Product.objects.all()
         context = {
-            'products':products
+            'products': products
         }
         return render(request, self.template_name, context=context)
 
-
     def post(self, request):
-        customer = request.POST.get("")
-        products = request.POST.get("")
+        cust_name = request.POST.get("cust_name")
+        cust_phone = request.POST.get("cust_phone")
+        sale_data = request.POST.get("sale_data")
+        print(cust_name)
+        print(cust_phone)
+        print(sale_data)
+        sale_data = sale_data.split(',')
+
+        for item in sale_data:
+            if item:
+                parts = item.split(' x ')
+                item_name = parts[0]
+                product = Product.objects.get(name=item_name)
+                quantity = int(parts[1])
+                # print(product)
+                total =product.price * quantity
+                print("Item:", item_name)
+                print("Quantity:", quantity)
+                print("total:", total)
+
+                # reduce the total quantity
+                if product.quantity < quantity:
+                    context = {
+                        'message': f'{product.name} has only {product.quantity} 12 left...try with a lesser number'
+                    }
+                    return  render(request, self.template_name, context=context)
+                else:
+                    product.quantity = product.quantity - quantity
+                    product.save()
+                    sale = Sale(product=product, quantity=quantity, buyer=cust_name, total=total,)
+                    sale.save()
+
+                print("-----")
 
 
-
-
-
-
+        return redirect('/')
 
 
 class Report(View):

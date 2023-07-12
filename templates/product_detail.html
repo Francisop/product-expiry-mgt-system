@@ -7,16 +7,16 @@
 
 
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+<!-- ======= Header ======= -->
+<header id="header" class="header fixed-top d-flex align-items-center">
 
-<h1 class="text-center p-5">Product Expiry Alert Management System</h1>
-
-
-  </header><!-- End Header -->
+    <h1 class="text-center p-5">Product Expiry Alert Management System</h1>
 
 
-  <!-- ======= Sidebar ======= -->
+</header><!-- End Header -->
+
+
+<!-- ======= Sidebar ======= -->
 <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
@@ -59,86 +59,50 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link " href="{% url 'report' %}">
-                <i class="bi bi-bar-chart"></i>
-                <span>Reports</span>
-            </a>
-        </li>
+ 
 
 
     </ul>
 
 </aside><!-- End Sidebar-->
 
-  <main id="main" class="main">
+<main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Products</h1>
+        <h1>Product detail</h1>
 
     </div><!-- End Page Title -->
 
     <section class="section dashboard">
-      <div class="row">
-
-        <!-- Left side columns -->
-        <div class="col-lg-12">
-          <div class="row">
-
-
-
-            <!-- Recent Sales -->
-            <div class="col-12">
-              <div class="card recent-sales overflow-auto">
-
-                          <div class="card-body">
-
-                  <table class="table table-borderless datatable">
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-<!--                        <th scope="col">Customer</th>-->
-                        <th scope="col">Product</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Qty</th>
-                        <th scope="col">Expiring</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-
-                      {% for item in products %}
-
-                      <tr>
-                        <th scope="row">#{{item.pk}}</th>
-
-                        <td><a href="#" class="text-primary">{{item.name}}</a></td>
-                        <td>${{item.price}}</td>
-                        <td>{{item.quantity}}</td>
-                        <td><span class="badge bg-success">{{item.expiry_date}}</span></td>
-                      </tr>
-                      {% endfor %}
-
-                    </tbody>
-                  </table>
-
-                </div>
-
-              </div>
-            </div><!-- End Recent Sales -->
+        <div class="jumbotron">
+            <div class="bg-danger rounded" style="width: 60px;">
+                <span class="badge badge-danger text-white">Expired</span>
+            </div>
+            <h1 class="display-3">{{product.name}}</h1>
+            <p class="lead">Quantity: {{product.quantity}}</p>
+            <p class="lead">NGN {{product.price}}</p>
 
 
+            <hr class="my-2">
+            <p class="lead">
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{product.id}}">
+                <button class="btn btn-danger btn-lg" type="submit" href="" role="button"> <i class="fa fa-trash"
+                        aria-hidden="true"></i>
+                    delete</button>
+            </form>
 
-          </div>
-        </div><!-- End Left side columns -->
+            </p>
+        </div>
 
-
-      </div>
     </section>
 
-  </main><!-- End #main -->
+</main><!-- End #main -->
 
 
 
-  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
 
 {% endblock %}

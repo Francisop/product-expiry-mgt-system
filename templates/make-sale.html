@@ -55,12 +55,7 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link " href="{% url 'report' %}">
-                <i class="bi bi-bar-chart"></i>
-                <span>Reports</span>
-            </a>
-        </li>
+  
 
 
     </ul>
@@ -68,7 +63,13 @@
 </aside><!-- End Sidebar-->
 
 <main id="main" class="main">
+    {% if message %}
 
+    <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show" role="alert">
+        {{message}}
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
     <div class="pagetitle">
         <h1>Make Sale</h1>
         <hr>
@@ -76,29 +77,30 @@
 
     <section class="section">
         <div class="row">
-            <div class="col-lg-6">
+               <!-- Multi Columns Form -->
+                        <form class="row g-3 p-2" method="post">
+                            {% csrf_token %}
+                            <div class="col-lg-6">
 
 
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Customer detail Form</h5>
 
-                        <!-- Multi Columns Form -->
-                        <form class="row g-3 p-2">
+
                             <div class="col-md-12">
                                 <label for="inputName5" class="form-label">Customer Name</label>
-                                <input type="text" class="form-control" id="inputName5">
+                                <input type="text" name="cust_name" class="form-control" id="inputName5">
                             </div>
                             <div class="col-md-12">
                                 <label for="inputEmail5" class="form-label">Phone</label>
-                                <input type="email" class="form-control" id="inputEmail5">
+                                <input type="tel" name="cust_phone" class="form-control" id="inputEmail5">
                             </div>
                             <!--                            <div class="col-md-6">-->
                             <!--                                <label for="inputPassword5" class="form-label">Password</label>-->
                             <!--                                <input type="password" class="form-control" id="inputPassword5">-->
                             <!--                            </div>-->
 
-                        </form><!-- End Multi Columns Form -->
 
                     </div>
                 </div>
@@ -114,9 +116,8 @@
 
                         <!-- No Labels Form -->
                         <div class="row g-3">
-                            <div class="col-md-2">
-                                <button onclick="addToSelectedOptions()" class="btn btn-primary">Add
-                                </button>
+                           <div class="col-md-2">
+                                <input type="text" class="form-control" id="qty" placeholder="Qty">
                             </div>
 
                             <div class="col-md-8">
@@ -126,8 +127,12 @@
                                     {% endfor %}
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <input type="text" class="form-control" id="qty" placeholder="Qty">
+
+                            <input type="hidden"  name="sale_data" id="saleInput">
+
+                                  <div class="col-md-2">
+                                <button onclick="addToSelectedOptions()" type="button" class="btn btn-primary">Add
+                                </button>
                             </div>
                             <br>
                             <div class="col-12">
@@ -145,6 +150,9 @@
 
 
             </div>
+
+                               </form><!-- End Multi Columns Form -->
+
         </div>
     </section>
 
@@ -171,12 +179,20 @@ function addToSelectedOptions() {
   // Display the array elements in a list format
   var selectedOptionsList = document.getElementById("selectedOptionsList");
   selectedOptionsList.innerHTML = ""; // Clear the existing list
+  var inputField = document.getElementById("saleInput");
+
 
   for (var i = 0; i < selectedOptions.length; i++) {
     var listItem = document.createElement("li");
     listItem.textContent = selectedOptions[i];
     selectedOptionsList.appendChild(listItem);
+
   }
+
+    inputField.value = selectedOptions+",";
+
+
+
 }
 
 

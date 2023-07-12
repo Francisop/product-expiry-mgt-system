@@ -55,12 +55,7 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link " href="{% url 'report' %}">
-                <i class="bi bi-bar-chart"></i>
-                <span>Reports</span>
-            </a>
-        </li>
+    
 
 
     </ul>
@@ -70,7 +65,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Products</h1>
+        <h1>Sales</h1>
 
     </div><!-- End Page Title -->
 
@@ -93,23 +88,29 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <!--                        <th scope="col">Customer</th>-->
+                                        <th scope="col">Date</th>
+                                        
                                         <th scope="col">Category</th>
+
                                         <th scope="col">Product</th>
+                                        <th scope="col">Buyer</th>
                                         <th scope="col">Qty</th>
                                         <th scope="col">Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
 
-                                    {% for item in products %}
+                                    {% for item in sales %}
 
                                     <tr>
                                         <th scope="row">#{{item.pk}}</th>
+                                        <td>{{item.created_at}}</td>
 
-                                        <td><a href="#" class="text-primary">{{item.name}}</a></td>
-                                        <td>${{item.price}}</td>
+                                        <td>{{item.product.category}}</td>
+                                        <td>{{item.product.name}}</td>
+                                        <td>{{item.buyer}}</td>
                                         <td>{{item.quantity}}</td>
-                                        <td><span class="badge bg-success">{{item.expiry_date}}</span></td>
+                                        <td><span class="badge bg-success">₦{{item.total}}</span></td>
                                     </tr>
                                     {% endfor %}
 
